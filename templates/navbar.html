@@ -1,0 +1,25 @@
+<nav class="navbar">
+    <div class="navbar-logo">Logo</div>
+    <div class="navbar-links" id="navbar-links">
+        <a href="/" class="navbar-item">Home</a>
+        <a href="/news" class="navbar-item">News</a>
+        <a href="/add_news" class="navbar-item">Add News</a>
+        <a href="/addexam" class="navbar-item">Add Exams</a>
+    </div>
+    <div class="navbar-toggle" id="navbar-toggle">
+        ☰
+    </div>
+</nav>
+
+<script>
+    document.getElementById('navbar-toggle').addEventListener('click', function() {
+        const navbarLinks = document.getElementById('navbar-links');
+        if (navbarLinks.style.transform === 'translateY(0%)') {
+            navbarLinks.style.transform = 'translateY(-200%)';
+            this.textContent = '☰';
+        } else {
+            navbarLinks.style.transform = 'translateY(0%)';
+            this.textContent = '✖';
+        }
+    });
+</script>

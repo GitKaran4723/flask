@@ -1,0 +1,21 @@
+{% if news %}
+    <div class="news-list">
+    {% for item in news %}
+        <div class="news-card">
+            <h3 class="news-title" onclick="toggleSummary({{ loop.index0 }})">{{ item[1] }}</h3>
+            <div class="news-summary" id="summary-{{ loop.index0 }}" style="display: none;">
+                <p>{{ item[3] | safe }}</p>
+                <button class="read-full-button" onclick="showFullNews({{ loop.index0 }})">Read Full News</button>
+            </div>
+            <div class="news-full" id="full-{{ loop.index0 }}" style="display: none;">
+                <p>{{ item[2] | safe }}</p>
+                <p>Author: {{ item[6] }}</p>
+                <button class="read-aloud-button hideItem" onclick="readAloud({{ loop.index0 }})">🔊</button>
+                <button class="pause-aloud-button hideItem" onclick="pauseAloud()">⏸️</button>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% else %}
+    <p>No news found for this date.</p>
+{% endif %}

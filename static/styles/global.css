@@ -1,0 +1,39 @@
+/* global.css */
+.hideItem{
+    display:none;
+}
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto', sans-serif; /* Use the imported Google Font */
+    line-height: 1.6; /* Improve readability with appropriate line height */
+    color: #333; /* Darker text color for better contrast */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', sans-serif; /* Consistent font for headers */
+    font-weight: bold; /* Ensure headers are bold */
+    color: #222; /* Slightly darker color for headers */
+}
+
+p {
+    font-family: 'Roboto', sans-serif; /* Consistent font for paragraphs */
+    font-size: 1em; /* Base font size */
+    margin-bottom: 1em; /* Space between paragraphs */
+}
+
+a {
+    color: #4285F4; /* Color for links */
+    text-decoration: none; /* Remove underline from links */
+    transition: color 0.3s ease; /* Smooth color transition */
+}
+
+a:hover {
+    color: #033079; /* Darker color on hover */
+}
+
+.navbar-logo, .navbar-item {
+    font-family: 'Roboto', sans-serif; /* Ensure navbar text uses the same font */
+}
+
+

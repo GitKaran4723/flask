@@ -1,0 +1,283 @@
+{% extends "base.html" %}
+
+{% block title %}News{% endblock %}
+
+{% block content %}
+    <div id="calendarContainer">
+        <div id="monthContainer">
+            <button id="prevMonthButton" class="monthButton">&lt;</button>
+            <span id="monthYearDisplay"></span>
+            <button id="nextMonthButton" class="monthButton">&gt;</button>
+        </div>
+        <div id="datesContainer">
+            <div id="datesScroller"></div>
+        </div>
+    </div>
+
+    <div id="newsContainer">
+        <h3>News for <span id="selectedDateDisplay">{{ selected_date.strftime('%Y-%m-%d') }}</span></h3>
+        <div id="newsContent">
+            {% if news %}
+                <div class="news-list">
+                {% for item in news %}
+                    <div class="news-card">
+                        <h3 class="news-title" onclick="toggleSummary({{ loop.index0 }})">{{ item[1] }}</h3>
+                        <div class="news-summary" id="summary-{{ loop.index0 }}" style="display: none;">
+                            <p>{{ item[6] }}</p>
+                            <button class="read-full-button" onclick="showFullNews({{ loop.index0 }})">Read Full News</button>
+                        </div>
+                        <div class="news-full" id="full-{{ loop.index0 }}" style="display: none;">
+                            <p>{{ item[2] | safe }}</p>
+                            <p>Author: {{ item[5] }}</p>
+                            <button class="read-aloud-button hideItem" onclick="readAloud({{ loop.index0 }})">🔊</button>
+                            <button class="pause-aloud-button hideItem" onclick="pauseAloud()">⏸️</button>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            {% else %}
+                <p>No news found for this date.</p>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block styles %}
+<style>
+    #monthContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        margin-bottom: 20px;
+        margin-top: 10px;
+    }
+    .monthButton {
+        background-color: white;
+        color: black;
+        border: 2px solid black;
+        padding: 5px 5px;
+        cursor: pointer;
+    }
+
+    #calendarContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        margin-bottom: 30px;
+    }
+
+    #datesContainer {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        width: 100%;
+        padding: 10px 0;
+    }
+    #datesScroller {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: 100%;
+    }
+    .dateButton {
+        display: inline-block;
+        margin: 5px;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 40px; /* Ensures text is vertically centered */
+        box-sizing: border-box; /* Ensures padding and borders are included in the total width and height */
+    }
+    .disabled {
+        cursor: not-allowed;
+        color: grey;
+    }
+    .selected {
+        font-weight: bold;
+        color: red;
+        background-color: #ffdddd;
+    }
+    #newsContainer {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .news-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .news-card {
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+    }
+    .news-title {
+        font-size: 1.5em;
+        margin: 0;
+    }
+    .news-summary {
+        margin-top: 10px;
+    }
+    .read-full-button, .read-aloud-button, .pause-aloud-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+    .pause-aloud-button {
+        background-color: #ff0000;
+    }
+    #monthYearDisplay {
+        padding: 0 10px;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 600px) {
+        .dateButton {
+            width: 30px;
+            height: 30px;
+            line-height: 30px; /* Adjust line-height to match height */
+            margin: 2px; /* Reduce margin for better fit */
+        }
+        .news-card {
+            padding: 10px;
+        }
+        .read-full-button, .read-aloud-button, .pause-aloud-button {
+            padding: 5px 10px;
+        }
+    }
+</style>
+{% endblock %}
+{% block scripts %}
+    <script>
+        
+
+        const today = new Date();
+        let selectedDate = today;
+        let currentMonth = today.getMonth();
+        let currentYear = today.getFullYear();
+        let speechInstance = null;
+
+        const monthYearDisplay = document.getElementById('monthYearDisplay');
+        const datesScroller = document.getElementById('datesScroller');
+        const selectedDateDisplay = document.getElementById('selectedDateDisplay');
+        const newsContainer = document.getElementById('newsContainer');
+        const newsContent = document.getElementById('newsContent');
+
+        document.getElementById('prevMonthButton').addEventListener('click', () => changeMonth(-1));
+        document.getElementById('nextMonthButton').addEventListener('click', () => changeMonth(1));
+
+        function changeMonth(direction) {
+            currentMonth += direction;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            renderCalendar();
+        }
+
+        function renderCalendar() {
+            const monthNames = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+            monthYearDisplay.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+            
+            datesScroller.innerHTML = '';
+            const firstDay = new Date(currentYear, currentMonth, 1);
+            const lastDay = new Date(currentYear, currentMonth + 1, 0);
+            for (let day = 1; day <= lastDay.getDate(); day++) {
+                const dateButton = document.createElement('div');
+                dateButton.className = 'dateButton';
+                const date = new Date(currentYear, currentMonth, day);
+                dateButton.textContent = day;
+                if (date > today) {
+                    dateButton.classList.add('disabled');
+                } else {
+                    dateButton.addEventListener('click', () => selectDate(date));
+                }
+                if (date.toDateString() === selectedDate.toDateString()) {
+                    dateButton.classList.add('selected');
+                    setTimeout(() => {
+                        dateButton.scrollIntoView({ inline: 'center', behavior: 'smooth' });
+                    }, 100);
+                }
+                datesScroller.appendChild(dateButton);
+            }
+        }
+
+        function selectDate(date) {
+            selectedDate = date;
+            const formattedDate = date.toLocaleDateString('en-CA'); // 'en-CA' gives the format 'YYYY-MM-DD'
+            selectedDateDisplay.textContent = formattedDate;
+            fetchNews(formattedDate);
+            renderCalendar();
+        }
+
+        function fetchNews(dateStr) {
+            fetch(`/news/${dateStr}`)
+                .then(response => response.text())
+                .then(html => {
+                    newsContent.innerHTML = html;
+                });
+        }
+
+        function toggleSummary(index) {
+            const summaryElement = document.getElementById(`summary-${index}`);
+            if (summaryElement.style.display === 'none') {
+                summaryElement.style.display = 'block';
+            } else {
+                summaryElement.style.display = 'none';
+            }
+        }
+
+        function showFullNews(index) {
+            const fullElement = document.getElementById(`full-${index}`);
+            if (fullElement.style.display === 'none') {
+                fullElement.style.display = 'block';
+            } else {
+                fullElement.style.display = 'none';
+            }
+        }
+
+        function readAloud(index) {
+            const fullElement = document.getElementById(`full-${index}`);
+            const text = fullElement.textContent;
+            if (speechInstance) {
+                speechInstance.cancel();
+            }
+            speechInstance = new SpeechSynthesisUtterance(text);
+            speechSynthesis.speak(speechInstance);
+        }
+
+        function pauseAloud() {
+            if (speechInstance) {
+                speechSynthesis.pause();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCalendar();
+            selectDate(today); // Default to today's date
+        });
+    </script>
+{% endblock %}

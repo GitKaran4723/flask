@@ -1,0 +1,72 @@
+/* Footer Styles */
+.footer {
+    background-color: #4285F4; /* Match navbar background color or use a complementary color */
+    color: white;
+    text-align: center; /* Center text */
+    padding: 20px; /* Add padding for spacing */
+    position: relative; /* Ensure it's positioned relative to its normal position */
+    bottom: 0;
+    
+    font-family: 'Roboto', sans-serif; /* Consistent font family */
+}
+
+.footer-logo {
+    font-size: 1.5em; /* Larger font size for logo or title */
+    font-weight: bold; /* Bold font weight */
+    margin-bottom: 10px; /* Space below the logo/title */
+}
+
+.footer-links {
+    margin: 10px 0; /* Space above and below the links section */
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none; /* Remove underline from links */
+    padding: 0 10px; /* Space between links */
+    font-size: 1em; /* Font size for links */
+    transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.footer-links a:hover {
+    color: #f0f0f0; /* Lighter color on hover */
+}
+
+.footer-text {
+    font-size: 0.9em; /* Slightly smaller text for additional info */
+    margin-top: 10px; /* Space above text */
+}
+
+.footer-social {
+    margin-top: 10px; /* Space above social icons */
+}
+
+.footer-social a {
+    color: white;
+    font-size: 1.5em; /* Size of social icons */
+    margin: 0 10px; /* Space between icons */
+    transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.footer-social a:hover {
+    color: #f0f0f0; /* Lighter color on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .footer {
+        padding: 10px; /* Reduce padding on smaller screens */
+    }
+
+    .footer-logo {
+        font-size: 1.2em; /* Adjust logo size */
+    }
+
+    .footer-links a {
+        font-size: 0.9em; /* Adjust font size for links */
+    }
+
+    .footer-social a {
+        font-size: 1.2em; /* Adjust size of social icons */
+    }
+}

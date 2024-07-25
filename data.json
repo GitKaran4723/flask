@@ -1,0 +1,10 @@
+{
+  "_id": { "$oid": "669f14087eeaca47d170997e" },
+  "title": "A Zoonotic Threat from Fruit Bats",
+  "content": "## Nipah Virus: A Zoonotic Threat from Fruit Bats\n\nThe Nipah virus is a zoonotic RNA virus belonging to the family Paramyxoviridae. It was first identified during an outbreak in Malaysia between 1998 and 1999. The primary carriers of the virus are fruit bats, specifically those of the Pteropus genus, commonly known as flying foxes. The virus can be transmitted from animals to humans, and also directly between humans. Symptoms in humans can range from asymptomatic infection to acute respiratory infection and fatal encephalitis. \n\nCurrently, there are no vaccines available for Nipah virus for either humans or animals, making prevention strategies crucial. These include avoiding exposure to bats and sick pigs, and ensuring proper hygiene and protective measures when handling potentially infected animals or individuals.\n",
+  "date_update": { "$date": { "$numberLong": "1721606400000" } },
+  "subjects": ["Current Events", "Science", "Technology"],
+  "author": "Karuna Jadhav",
+  "summary": "\nThe Nipah virus, an RNA virus of the Paramyxoviridae family, was first identified in Malaysia in 1998-1999. Transmitted by fruit bats, it causes severe disease in humans, with no available vaccines for prevention.\n",
+  "__v": { "$numberInt": "0" }
+}

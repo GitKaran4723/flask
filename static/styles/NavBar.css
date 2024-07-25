@@ -1,0 +1,82 @@
+/* NavBar.css */
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+/* Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #4285F4; /* Navbar background color */
+    padding: 10px 20px;
+    color: white;
+    z-index: 100;
+}
+
+.navbar-logo {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease; /* Smooth transition for menu */
+}
+
+.navbar-item {
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 1em;
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.navbar-item:hover {
+    background-color: #125ed7; /* Darker background on hover */
+    color:aliceblue;
+}
+
+.navbar-toggle {
+    display: none;
+    color: white;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+    .navbar-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 60px; /* Adjust based on your navbar height */
+        left: 0;
+        right: 0;
+        background-color: #4285F4;
+        transform: translateY(-200%); /* Hide off-screen initially */
+    }
+
+    .navbar-links.open {
+        transform: translateY(0); /* Show menu */
+    }
+
+    .navbar-toggle {
+        display: block; /* Show toggle button */
+    }
+}
+
+/* Ensure desktop styles remain intact */
+@media (min-width: 769px) {
+    .navbar-links {
+        display: flex; /* Ensure links are displayed on larger screens */
+        transform: none; /* Ensure menu is not shifted */
+    }
+
+    .navbar-toggle {
+        display: none; /* Hide toggle button on desktop */
+    }
+}

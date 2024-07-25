@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h1>Upcoming Exams</h1>
+    <div class="exam_cards_div">
+    {% for exam in exams %}
+        <div class="exam_card">
+            <h2>{{ exam[1] }}</h2>
+            <p><strong>Exam Date:</strong> {{ exam[2] }}</p>
+            <p class="hideItem"><strong>Days Remaining:</strong> <span id="days-remaining-{{ exam[0] }}">Loading...</span></p>
+            <p><strong>Registration Start:</strong> {{ exam[3] or "To be updated" }}</p>
+            <p><strong>Registration End:</strong> {{ exam[4] or "To be updated" }}</p>
+            <p><strong>Other Details:</strong> {{ exam[5] or "To be updated" }}</p>
+            <a href="{{ exam[6] }}" target="_blank">More Information</a>
+            <p><strong>Category:</strong> {{ exam[7] or "To be updated" }}</p>
+            <p><strong>Description:</strong> {{ exam[8] or "To be updated" }}</p>
+        </div>
+    {% endfor %}
+    </div>
+
+    <div class="summary-popup" style="display: none;">
+        <div class="popup-content">
+            <span class="close" onclick="closeSummary()">&times;</span>
+            <p id="summary-text"></p>
+        </div>
+    </div>
+    
+{% endblock %}
+
+{% block scripts %}
+<style>
+    .hideItem{
+        display:none;
+    }
+</style>
+<script>
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        const exams = {{ exams|safe }};
+        
+        console.log(exams)
+        exams.forEach(exam => {
+            const examId = exam[0];
+            const examDate = new Date(exam[2]);
+            const daysRemainingElement = document.getElementById(`days-remaining-${examId}`);
+
+            function updateDaysRemaining() {
+                const now = new Date();
+                const timeDifference = examDate - now;
+                const daysRemaining = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+                daysRemainingElement.innerText = daysRemaining > 0 ? `${daysRemaining} days` : "Exam day!";
+            }
+
+            updateDaysRemaining();
+            setInterval(updateDaysRemaining, 1000);
+        });
+    });
+
+    function showSummary(summary) {
+        document.querySelector('.summary-popup').style.display = 'flex';
+        document.getElementById('summary-text').innerText = summary;
+    }
+
+    function closeSummary() {
+        document.querySelector('.summary-popup').style.display = 'none';
+    }
+</script>
+{% endblock %}
