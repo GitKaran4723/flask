@@ -1,3 +1,4 @@
 markdown
 flask
 flask_mySQL
+python-dotenv
