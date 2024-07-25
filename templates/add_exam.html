@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block title %}Add Exam{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="content">
+        <h2>Add Exam</h2>
+        <form method="POST" action="">
+            <div class="form-group">
+                <label for="name">Exam Name</label><br>
+                <input type="text" name="name" id="name" required><br>
+            </div>
+            <div class="form-group">
+                <label for="exam_date">Exam Date</label><br>
+                <input type="date" name="exam_date" id="exam_date" required><br>
+            </div>
+            <div class="form-group">
+                <label for="notification_date">Notification Date</label><br>
+                <input type="date" name="notification_date" id="notification_date" required><br>
+            </div>
+            <div class="form-group">
+                <label for="application_start_date">Application Start Date</label><br>
+                <input type="date" name="application_start_date" id="application_start_date" required><br>
+            </div>
+            <div class="form-group">
+                <label for="application_end_date">Application End Date</label><br>
+                <input type="date" name="application_end_date" id="application_end_date" required><br>
+            </div>
+            <div class="form-group">
+                <label for="notification_link">Notification Link</label><br>
+                <input type="url" name="notification_link" id="notification_link" required><br>
+            </div>
+            <div class="form-group">
+                <label for="tag">Tag</label><br>
+                <input type="text" name="tag" id="tag" required><br>
+            </div>
+            <div class="form-group">
+                <label for="summary">Summary</label><br>
+                <textarea name="summary" id="summary"></textarea><br>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block styles %}
+
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+    }
+    
+    .content {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 80%;
+        box-sizing: border-box;
+    }
+    
+    h2 {
+        margin-top: 0;
+    }
+    
+    .form-group {
+        margin-bottom: 15px;
+    }
+    
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    
+    input[type="text"],
+    input[type="date"],
+    input[type="url"],
+    textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    
+    textarea {
+        resize: vertical;
+    }
+    
+    input[type="submit"] {
+        background: #28a745;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    input[type="submit"]:hover {
+        background: #218838;
+    }
+    
+    /* Media queries for mobile responsiveness */
+    @media (max-width: 768px) {
+        .content {
+            width: 90%;
+            padding: 15px;
+        }
+    
+        input[type="text"],
+        input[type="date"],
+        input[type="url"],
+        textarea {
+            padding: 8px;
+        }
+    
+        input[type="submit"] {
+            padding: 10px;
+        }
+    }
+    
+</style>
+
+{% endblock %}
