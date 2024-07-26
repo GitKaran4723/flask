@@ -104,7 +104,7 @@ def add_news():
     return render_template('add_news.html')
 
 
-@app.route('/add_exam46', methods=['GET', 'POST'])
+@app.route('/add_exam45', methods=['GET', 'POST'])
 def add_exam():
     if request.method == 'POST':
         name = request.form['name']
@@ -124,7 +124,7 @@ def add_exam():
         mysql.connection.commit()
         cursor.close()
 
-        return redirect(url_for('get_exams'))  # Redirect to the exams page
+        return redirect(url_for('/'))  # Redirect to the exams page
 
     return render_template('add_exam.html')
 

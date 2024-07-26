@@ -36,4 +36,6 @@ a:hover {
     font-family: 'Roboto', sans-serif; /* Ensure navbar text uses the same font */
 }
 
-
+.news-full img{
+    width: 85vw;
+}
