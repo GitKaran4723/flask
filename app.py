@@ -128,6 +128,11 @@ def add_exam():
 
     return render_template('add_exam.html')
 
+# karan
+@app.route('/study_material',methods=['POST','GET'])
+def study_material():
+    return render_template()
+
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5000)
