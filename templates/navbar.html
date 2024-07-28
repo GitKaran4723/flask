@@ -1,15 +1,74 @@
+{#karan full page#}
 <nav class="navbar">
     <div class="navbar-logo">Logo</div>
     <div class="navbar-links" id="navbar-links">
         <a href="/" class="navbar-item">Home</a>
         <a href="/news" class="navbar-item">News</a>
-        {% comment %} karan {% endcomment %}
-        <a href="/study_material" class="navbar-item">News</a>
+        <!-- Dropdown -->
+        <div class="navbar-item dropdown">
+            <a href="#" class="navbar-link">Study Material</a>
+            <div class="dropdown-content">
+                <a href="{{ url_for('computer_science') }}">Computer Science</a>
+            </div>
+        </div>
     </div>
     <div class="navbar-toggle" id="navbar-toggle">
         ☰
     </div>
 </nav>
+
+<style>
+.navbar {
+    position: relative;
+}
+
+.navbar-item {
+    display: inline-block;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.navbar-toggle {
+    cursor: pointer;
+}
+
+#navbar-links {
+    transition: transform 0.3s ease;
+}
+
+.navbar-link{
+    color: white;
+}
+</style>
 
 <script>
     document.getElementById('navbar-toggle').addEventListener('click', function() {

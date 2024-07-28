@@ -5,14 +5,16 @@
 {% block content %}
     <h1>Upcoming Exams</h1>
     <div class="exam_cards_div">
+    {# karan - correct home page #}
     {% for exam in exams %}
         <div class="exam_card">
             <h2>{{ exam[1] }}</h2>
             <p><strong>Exam Date:</strong> {{ exam[2] }}</p>
             <p class="hideItem"><strong>Days Remaining:</strong> <span id="days-remaining-{{ exam[0] }}">Loading...</span></p>
-            <p><strong>Registration Start:</strong> {{ exam[3] or "To be updated" }}</p>
-            <p><strong>Registration End:</strong> {{ exam[4] or "To be updated" }}</p>
-            <p><strong>Other Details:</strong> {{ exam[5] or "To be updated" }}</p>
+            <p><strong>Notification Release:</strong> {{ exam[3] or "To be updated" }}</p>
+            <p><strong>Registration Start:</strong> {{ exam[4] or "To be updated" }}</p>
+            <p><strong>Registration End:</strong> {{ exam[5] or "To be updated" }}</p>
+            <p class="hideItem"><strong>Other Details:</strong> {{ exam[6] or "To be updated" }}</p>
             <a href="{{ exam[6] }}" target="_blank">More Information</a>
             <p><strong>Category:</strong> {{ exam[7] or "To be updated" }}</p>
             <p><strong>Description:</strong> {{ exam[8] or "To be updated" }}</p>
