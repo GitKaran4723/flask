@@ -15,8 +15,22 @@
             <textarea id="content" name="content" required></textarea>
         </div>
         <div class="form-group">
-            <label for="subjects">Subjects (comma-separated):</label>
-            <input type="text" id="subjects" name="subjects">
+            <label for="subjects">Subjects:</label>
+            <select id="subjects" name="subjects" multiple>
+                <option value="Prelims">Prelims</option>
+                <option value="Indian Society">Indian Society</option>
+                <option value="Governance">Governance</option>
+                <option value="Disaster Management">Disaster Management</option>
+                <option value="International Relations">International Relations</option>
+                <option value="Economics">Economics</option>
+                <option value="Geography">Geography</option>
+                <option value="History">History</option>
+                <option value="Science and Technology">Science and Technology</option>
+                <option value="Culture">Culture</option>
+                <option value="GS Paper 4">GS Paper 4</option>
+            </select>
+            <input type="hidden" id="subjects-hidden" name="subjects-hidden">
+            <div id="selected-subjects"></div>
         </div>
         <div class="form-group">
             <label for="author">Author:</label>
@@ -72,6 +86,12 @@
     button:hover {
         background-color: #218838;
     }
+    select[multiple] {
+        height: 150px;
+    }
+    #selected-subjects {
+        margin-top: 10px;
+    }
     @media (max-width: 768px) {
         .container {
             padding: 15px;
@@ -85,6 +105,24 @@
 
 {% block scripts %}
 <script>
-    // Add your JavaScript here if needed
+    document.addEventListener('DOMContentLoaded', () => {
+        const subjectsSelect = document.getElementById('subjects');
+        const selectedSubjectsDiv = document.getElementById('selected-subjects');
+        const subjectsHiddenInput = document.getElementById('subjects-hidden');
+
+        // Function to update the hidden input and display selected subjects
+        function updateSelectedSubjects() {
+            const selectedOptions = Array.from(subjectsSelect.selectedOptions);
+            const selectedValues = selectedOptions.map(option => option.value);
+            subjectsHiddenInput.value = selectedValues.join(',');
+            selectedSubjectsDiv.textContent = 'Selected Subjects: ' + selectedValues.join(', ');
+        }
+
+        // Event listener for changes in the dropdown
+        subjectsSelect.addEventListener('change', updateSelectedSubjects);
+
+        // Initialize display on page load
+        updateSelectedSubjects();
+    });
 </script>
 {% endblock %}

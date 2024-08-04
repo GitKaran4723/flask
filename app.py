@@ -186,7 +186,8 @@ def get_news_api(date_str):
             "id": row[0],
             "title": row[1],
             "content": row[2],
-            "date": row[3].strftime('%Y-%m-%d %H:%M:%S')
+            "date": row[3],
+            "categories":row[4]
         }
         news_list.append(news_item)
 
